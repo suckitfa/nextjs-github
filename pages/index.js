@@ -1,8 +1,36 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import {Button} from 'antd'
+import Link from 'next/link'
+import Router from 'next/router'
+const events = [
+  'routeChangeStart',
+  'routeChangeComplete',
+  'routeChangeError',
+  'beforeHistoryChange',
+  'hashChangeStart',
+  'hashChangeComplete'
+]
+function makeEvent(type) {
+  return (...args) => {
+    console.log(type,...args)
+  }
+}
+
+events.forEach(event => {
+  Router.events.on(event,makeEvent)
+})
 
 export default function Home() {
+  const gotoPageB = () =>{
+    Router.push({
+      pathname:"/test/b",
+      query:{
+        id:2
+      }
+    },'/test/b/2')
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -12,6 +40,15 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+      <Link href="/a?id=1" as="/a/id/1">
+            <Button>Index A</Button>
+        </Link>
+        <Link href="/test/b?id=1" as="/test/b/id/1">
+            <Button>Index B</Button>
+        </Link>
+        <Link href="/testhooks" as="/testhooks">
+            <Button>Index hooks</Button>
+        </Link>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
