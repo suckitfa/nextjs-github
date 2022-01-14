@@ -1,3 +1,7 @@
+const GITHUB_OAUTH_URL = "https://github.com/login/oauth/authorize"
+const SCOPE = 'user'
+const {github} = require('./config')
+
 module.exports = {
     reactStrictMode: true,
     // 根目录
@@ -11,4 +15,8 @@ module.exports = {
     },
     // pages目录下 页面后缀
     pageExtensions: ['jsx','js'],
+    publicRuntimeConfig: {
+        GITHUB_OAUTH_URL,
+        OAUTH_URL: `${GITHUB_OAUTH_URL}?client_id=${github.client_id}&scope=${SCOPE}`
+    }
 }
